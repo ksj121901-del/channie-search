@@ -28,7 +28,6 @@ body {
     margin: auto;
 }
 
-/* 상단 헤더 */
 .top-bar {
     height: 80px;
     background: linear-gradient(135deg, #FEE500, #fff08d);
@@ -43,7 +42,6 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,.12);
 }
 
-/* 검색창 */
 .search-box {
     margin-bottom: 20px;
 }
@@ -64,7 +62,6 @@ body {
     color: #7ec4d8;
 }
 
-/* 리스트 라벨 */
 .header {
     display: grid;
     grid-template-columns: 80px 1fr 100px;
@@ -78,7 +75,6 @@ body {
     text-align: right;
 }
 
-/* 시그 카드 리스트 */
 .list {
     display: flex;
     flex-direction: column;
@@ -99,7 +95,6 @@ body {
     transition: .25s;
 }
 
-/* 번호(단가) */
 .number {
     width: 55px;
     height: 55px;
@@ -114,14 +109,12 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,.1);
 }
 
-/* 시그 이름 */
 .name {
     font-size: 24px;
     font-weight: 700;
     color: #28536b;
 }
 
-/* 좋아요 버튼 영역 */
 .like-box {
     text-align: right;
 }
@@ -139,7 +132,6 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* 내가 좋아요를 눌렀을 때의 스타일 */
 .like-btn.liked {
     background: #FFDE4D;
     color: #333;
@@ -154,7 +146,6 @@ body {
     font-size: 22px;
 }
 
-/* 배경 장식 버블 */
 .bubble {
     position: fixed;
     border-radius: 50%;
@@ -185,135 +176,77 @@ body {
         <div class="text-right">좋아요</div>
     </div>
 
-    <div id="list" class="list"></div>
+    <div id="list" class="list">데이터를 불러오는 중...</div>
 </div>
 
 <script>
-// 💡 요청하신 새 시그리스트 데이터로 전면 교체 완료
+// ⚠️ 여기에 1단계에서 복사한 구글 웹 앱 URL 주소를 붙여넣으세요!
+const BASE_URL = https://script.google.com/macros/s/AKfycbx8bfzKW1wPELHyYkmj048HqUmHV2JZ1ese1CwRMUdlYhkrptj4HAVMlrmyf7KFYyxvZA/exec;
+
 const sigList = [
-    { id: 28, name: "이쁘다니까" },
-    { id: 30, name: "두산베어스" },
-    { id: 31, name: "엘지트윈스" },
-    { id: 32, name: "삼성라이온즈" },
-    { id: 33, name: "롯데자이언츠" },
-    { id: 34, name: "기아타이거즈" },
-    { id: 35, name: "한화이글스" },
-    { id: 36, name: "케이티위즈" },
-    { id: 37, name: "나니가스키" },
-    { id: 38, name: "간밧떼" },
-    { id: 39, name: "전파송" },
-    { id: 49, name: "살구송" },
-    { id: 54, name: "오버드라이브" },
-    { id: 57, name: "모찌송" },
-    { id: 60, name: "찐이야" },
-    { id: 62, name: "뿐이고" },
-    { id: 64, name: "영원한사랑" },
-    { id: 65, name: "한잔해" },
-    { id: 66, name: "맷돌" },
-    { id: 67, name: "헤비머신건" },
-    { id: 69, name: "오늘밤에" },
-    { id: 70, name: "외모췍" },
-    { id: 73, name: "트월킹덕" },
-    { id: 74, name: "아브라카다브라카" },
-    { id: 75, name: "빛을따라서" },
-    { id: 76, name: "솜사탕" },
-    { id: 77, name: "칭칭언니" },
-    { id: 78, name: "캐치캐치" },
-    { id: 80, name: "페스티벌" },
-    { id: 81, name: "오늘밤에" },
-    { id: 82, name: "피리송" },
-    { id: 83, name: "핫썸머" },
-    { id: 84, name: "팬서비스" },
-    { id: 85, name: "베이스다운로우" },
-    { id: 86, name: "고민중독" },
-    { id: 87, name: "삐끼삐끼" },
-    { id: 88, name: "버터플라이" },
-    { id: 89, name: "간바레" },
-    { id: 90, name: "홀드업" },
-    { id: 91, name: "몸매" },
-    { id: 92, name: "슈퍼맨" },
-    { id: 93, name: "nanana" },
-    { id: 94, name: "사랑의 배터리" },
-    { id: 95, name: "무조건" },
-    { id: 96, name: "역도" },
-    { id: 97, name: "꽃게춤" },
-    { id: 98, name: "수파두파디바" },
-    { id: 101, name: "원모어타임" },
-    { id: 102, name: "디바" },
-    { id: 103, name: "Muah!" },
-    { id: 104, name: "마돈나" },
-    { id: 105, name: "왜요왜요" },
-    { id: 106, name: "라부부" },
-    { id: 107, name: "바람피면D지는거야" },
-    { id: 108, name: "뾱뾱이" },
-    { id: 109, name: "여우" },
-    { id: 111, name: "콩나물" },
-    { id: 112, name: "마티니" },
-    { id: 113, name: "미스터츄" },
-    { id: 114, name: "자기야화풀어" },
-    { id: 115, name: "노바디" },
-    { id: 116, name: "왓이즈러브" },
-    { id: 117, name: "슈퍼그럼요" },
-    { id: 118, name: "러브쉐이크" },
-    { id: 119, name: "핫해" },
-    { id: 120, name: "라라리라라" },
-    { id: 121, name: "나루토" },
-    { id: 122, name: "따따블" },
-    { id: 123, name: "묵찌빠" },
-    { id: 124, name: "프리티걸" },
-    { id: 125, name: "진짜배기" },
-    { id: 126, name: "난예술이야" },
-    { id: 127, name: "립스틱" },
-    { id: 128, name: "매니악" },
-    { id: 129, name: "나랑사귈래" },
-    { id: 130, name: "사랑받을준비완료" },
-    { id: 131, name: "텔미" },
-    { id: 132, name: "Lsd" },
-    { id: 133, name: "돌스" },
-    { id: 134, name: "핑크레이디" },
-    { id: 135, name: "oh!" },
-    { id: 136, name: "아임유어걸" },
-    { id: 137, name: "소원을말해봐" },
-    { id: 138, name: "캔디" },
-    { id: 139, name: "우유" },
-    { id: 141, name: "반짝반짝" },
-    { id: 142, name: "달링" },
-    { id: 143, name: "슈가프리" },
-    { id: 144, name: "너와의지금" },
-    { id: 145, name: "젠틀맨" },
-    { id: 146, name: "키싱유" },
-    { id: 147, name: "꿈빛파티시엘" },
-    { id: 148, name: "미스터" },
-    { id: 149, name: "계엄령" },
-    { id: 151, name: "호영업" },
-    { id: 152, name: "롤리폴리" },
-    { id: 153, name: "드라마" },
-    { id: 154, name: "오빠바이러스" },
-    { id: 155, name: "드라군" },
-    { id: 156, name: "마그네틱" },
-    { id: 157, name: "뱅뱅" },
-    { id: 158, name: "이브의경고" },
-    { id: 159, name: "오빠하앙" },
-    { id: 160, name: "널그리며" },
-    { id: 161, name: "배드걸굿걸" },
-    { id: 162, name: "노바디노즈" },
-    { id: 163, name: "와" },
-    { id: 164, name: "킥드베" },
-    { id: 165, name: "제로투" },
-    { id: 166, name: "보핍보핍" },
-    { id: 167, name: "바우치" },
-    { id: 168, name: "심쿵해" },
-    { id: 169, name: "터미널" }
+    { id: 8, name: "이쁘다니까" }, { id: 30, name: "두산베어스" }, { id: 31, name: "엘지트윈스" },
+    { id: 32, name: "삼성라이온즈" }, { id: 33, name: "롯데자이언츠" }, { id: 34, name: "기아타이거즈" },
+    { id: 35, name: "한화이글스" }, { id: 36, name: "케이티위즈" }, { id: 37, name: "나니가스키" },
+    { id: 38, name: "간밧떼" }, { id: 39, name: "전파송" }, { id: 49, name: "살구송" },
+    { id: 54, name: "오버드라이브" }, { id: 57, name: "모찌송" }, { id: 60, name: "찐이야" },
+    { id: 62, name: "뿐이고" }, { id: 64, name: "영원한사랑" }, { id: 65, name: "한잔해" },
+    { id: 66, name: "맷돌" }, { id: 67, name: "헤비머신건" }, { id: 69, name: "오늘밤에" },
+    { id: 70, name: "외모췍" }, { id: 73, name: "트월킹덕" }, { id: 74, name: "아브라카다브라카" },
+    { id: 75, name: "빛을따라서" }, { id: 76, name: "솜사탕" }, { id: 77, name: "칭칭언니" },
+    { id: 78, name: "캐치캐치" }, { id: 80, name: "페스티벌" }, { id: 81, name: "오늘밤에" },
+    { id: 82, name: "피리송" }, { id: 83, name: "핫썸머" }, { id: 84, name: "팬서비스" },
+    { id: 85, name: "베이스다운로우" }, { id: 86, name: "고민중독" }, { id: 87, name: "삐끼삐끼" },
+    { id: 88, name: "버터플라이" }, { id: 89, name: "간바레" }, { id: 90, name: "홀드업" },
+    { id: 91, name: "몸매" }, { id: 92, name: "슈퍼맨" }, { id: 93, name: "nanana" },
+    { id: 94, name: "사랑의 배터리" }, { id: 95, name: "무조건" }, { id: 96, name: "역도" },
+    { id: 97, name: "꽃게춤" }, { id: 98, name: "수파두파디바" }, { id: 101, name: "원모어타임" },
+    { id: 102, name: "디바" }, { id: 103, name: "Muah!" }, { id: 104, name: "마돈나" },
+    { id: 105, name: "왜요왜요" }, { id: 106, name: "라부부" }, { id: 107, name: "바람피면D지는거야" },
+    { id: 108, name: "뾱뾱이" }, { id: 109, name: "여우" }, { id: 111, name: "콩나물" },
+    { id: 112, name: "마티니" }, { id: 113, name: "미스터츄" }, { id: 114, name: "자기야화풀어" },
+    { id: 115, name: "노바디" }, { id: 116, name: "왓이즈러브" }, { id: 117, name: "슈퍼그럼요" },
+    { id: 118, name: "러브쉐이크" }, { id: 119, name: "핫해" }, { id: 120, name: "라라리라라" },
+    { id: 121, name: "나루토" }, { id: 122, name: "따따블" }, { id: 123, name: "묵찌빠" },
+    { id: 124, name: "프리티걸" }, { id: 125, name: "진짜배기" }, { id: 126, name: "난예술이야" },
+    { id: 127, name: "립스틱" }, { id: 128, name: "매니악" }, { id: 129, name: "나랑사귈래" },
+    { id: 130, name: "사랑받을준비완료" }, { id: 131, name: "텔미" }, { id: 132, name: "Lsd" },
+    { id: 133, name: "돌스" }, { id: 134, name: "핑크레이디" }, { id: 135, name: "oh!" },
+    { id: 136, name: "아임유어걸" }, { id: 137, name: "소원을말해봐" }, { id: 138, name: "캔디" },
+    { id: 139, name: "우유" }, { id: 141, name: "반짝반짝" }, { id: 142, name: "달링" },
+    { id: 143, name: "슈가프리" }, { id: 144, name: "너와의지금" }, { id: 145, name: "젠틀맨" },
+    { id: 146, name: "키싱유" }, { id: 147, name: "꿈빛파티시엘" }, { id: 148, name: "미스터" },
+    { id: 149, name: "계엄령" }, { id: 151, name: "호영업" }, { id: 152, name: "롤리폴리" },
+    { id: 153, name: "드라마" }, { id: 154, name: "오빠바이러스" }, { id: 155, name: "드라군" },
+    { id: 156, name: "마그네틱" }, { id: 157, name: "뱅뱅" }, { id: 158, name: "이브의경고" },
+    { id: 159, name: "오빠하앙" }, { id: 160, name: "널그리며" }, { id: 161, name: "배드걸굿걸" },
+    { id: 162, name: "노바디노즈" }, { id: 163, name: "와" }, { id: 164, name: "킥드베" },
+    { id: 165, name: "제로투" }, { id: 166, name: "보핍보핍" }, { id: 167, name: "바우치" },
+    { id: 168, name: "심쿵해" }, { id: 169, name: "터미널" }
 ];
 
 const list = document.getElementById("list");
 const search = document.getElementById("search");
+let globalLikes = {}; // 구글에서 받아온 좋아요 수를 임시 저장
 
-function getLikeData(songName) {
-    const likes = JSON.parse(localStorage.getItem("simple_likes") || "{}");
-    return likes[songName] || { count: 0, clicked: false };
+// 내가 클릭한 상태는 내 브라우저에만 저장 (중복 방지용)
+function getMyClickStatus(songName) {
+    const clicks = JSON.parse(localStorage.getItem("my_clicks") || "{}");
+    return !!clicks[songName];
 }
 
+// 1. 구글 서버에서 데이터 불러오기
+async function loadLikesFromServer() {
+    try {
+        const response = await fetch(BASE_URL);
+        globalLikes = await response.json();
+        render(search.value);
+    } catch (e) {
+        console.error("데이터 로드 실패:", e);
+        list.innerHTML = `<div class="no-result">❌ 데이터를 불러오지 못했습니다. URL을 확인하세요.</div>`;
+    }
+}
+
+// 2. 화면 그리기
 function render(keyword=""){
     const filtered = sigList.filter(item =>
         item.name.toLowerCase().includes(keyword.toLowerCase())
@@ -325,17 +258,18 @@ function render(keyword=""){
     }
 
     list.innerHTML = filtered.map(item => {
-        const likeData = getLikeData(item.name);
-        const heartIcon = likeData.clicked ? "💛" : "🤍";
-        const btnClass = likeData.clicked ? "like-btn liked" : "like-btn";
+        const serverCount = globalLikes[item.name] || 0;
+        const isClicked = getMyClickStatus(item.name);
+        const heartIcon = isClicked ? "💛" : "🤍";
+        const btnClass = isClicked ? "like-btn liked" : "like-btn";
         
         return `
             <div class="card">
                 <div class="number">${item.id}</div>
                 <div class="name">${item.name}</div>
                 <div class="like-box">
-                    <button class="${btnClass}" onclick="toggleLike('${item.name}')">
-                        ${heartIcon} ${likeData.count}
+                    <button class="${btnClass}" onclick="toggleLike(${item.id}, '${item.name}')">
+                        ${heartIcon} ${serverCount}
                     </button>
                 </div>
             </div>
@@ -347,26 +281,32 @@ search.addEventListener('input',(e)=>{
     render(e.target.value);
 });
 
-function toggleLike(songName){
-    const likes = JSON.parse(localStorage.getItem("simple_likes") || "{}");
-    
-    if(!likes[songName]) {
-        likes[songName] = { count: 0, clicked: false };
-    }
+// 3. 좋아요 누르면 구글 서버로 전송하기
+async function toggleLike(id, songName){
+    const clicks = JSON.parse(localStorage.getItem("my_clicks") || "{}");
+    const isClicked = !!clicks[songName];
+    const type = isClicked ? "down" : "up";
 
-    if(likes[songName].clicked) {
-        likes[songName].clicked = false;
-        likes[songName].count = Math.max(0, likes[songName].count - 1);
-    } else {
-        likes[songName].clicked = true;
-        likes[songName].count += 1;
-    }
-
-    localStorage.setItem("simple_likes", JSON.stringify(likes));
+    // 화면 선반영 (딜레이 체감 줄이기)
+    if (!globalLikes[songName]) globalLikes[songName] = 0;
+    globalLikes[songName] = type === "up" ? globalLikes[songName] + 1 : Math.max(0, globalLikes[songName] - 1);
+    clicks[songName] = !isClicked;
+    localStorage.setItem("my_clicks", JSON.stringify(clicks));
     render(search.value);
+
+    // 구글 서버 전송
+    try {
+        await fetch(BASE_URL, {
+            method: "POST",
+            body: JSON.stringify({ id: id, songName: songName, type: type })
+        });
+    } catch(e) {
+        console.error("서버 전송 실패:", e);
+    }
 }
 
-render();
+// 시작 시 데이터 로딩
+loadLikesFromServer();
 </script>
 </body>
 </html>
