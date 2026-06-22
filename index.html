@@ -180,8 +180,8 @@ body {
 </div>
 
 <script>
-// ⚠️ 여기에 1단계에서 복사한 구글 웹 앱 URL 주소를 붙여넣으세요!
-const BASE_URL = https://script.google.com/macros/s/AKfycbx8bfzKW1wPELHyYkmj048HqUmHV2JZ1ese1CwRMUdlYhkrptj4HAVMlrmyf7KFYyxvZA/exec;
+// 💡 보내주신 구글 웹 앱 주소를 정확하게 반영했습니다.
+const BASE_URL = "https://script.google.com/macros/s/AKfycbx8bfzKW1wPELHyYkmj048HqUmHV2JZ1ese1CwRMUdlYhkrptj4HAVMlrmyf7KFYyxvZA/exec";
 
 const sigList = [
     { id: 8, name: "이쁘다니까" }, { id: 30, name: "두산베어스" }, { id: 31, name: "엘지트윈스" },
@@ -226,15 +226,13 @@ const sigList = [
 
 const list = document.getElementById("list");
 const search = document.getElementById("search");
-let globalLikes = {}; // 구글에서 받아온 좋아요 수를 임시 저장
+let globalLikes = {}; 
 
-// 내가 클릭한 상태는 내 브라우저에만 저장 (중복 방지용)
 function getMyClickStatus(songName) {
     const clicks = JSON.parse(localStorage.getItem("my_clicks") || "{}");
     return !!clicks[songName];
 }
 
-// 1. 구글 서버에서 데이터 불러오기
 async function loadLikesFromServer() {
     try {
         const response = await fetch(BASE_URL);
@@ -242,11 +240,10 @@ async function loadLikesFromServer() {
         render(search.value);
     } catch (e) {
         console.error("데이터 로드 실패:", e);
-        list.innerHTML = `<div class="no-result">❌ 데이터를 불러오지 못했습니다. URL을 확인하세요.</div>`;
+        list.innerHTML = `<div class="no-result">❌ 데이터를 불러오지 못했습니다. URL과 구글 권한을 확인하세요.</div>`;
     }
 }
 
-// 2. 화면 그리기
 function render(keyword=""){
     const filtered = sigList.filter(item =>
         item.name.toLowerCase().includes(keyword.toLowerCase())
@@ -281,20 +278,17 @@ search.addEventListener('input',(e)=>{
     render(e.target.value);
 });
 
-// 3. 좋아요 누르면 구글 서버로 전송하기
 async function toggleLike(id, songName){
     const clicks = JSON.parse(localStorage.getItem("my_clicks") || "{}");
     const isClicked = !!clicks[songName];
     const type = isClicked ? "down" : "up";
 
-    // 화면 선반영 (딜레이 체감 줄이기)
     if (!globalLikes[songName]) globalLikes[songName] = 0;
     globalLikes[songName] = type === "up" ? globalLikes[songName] + 1 : Math.max(0, globalLikes[songName] - 1);
     clicks[songName] = !isClicked;
     localStorage.setItem("my_clicks", JSON.stringify(clicks));
     render(search.value);
 
-    // 구글 서버 전송
     try {
         await fetch(BASE_URL, {
             method: "POST",
@@ -305,7 +299,6 @@ async function toggleLike(id, songName){
     }
 }
 
-// 시작 시 데이터 로딩
 loadLikesFromServer();
 </script>
 </body>
