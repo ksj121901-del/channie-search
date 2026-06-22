@@ -180,7 +180,7 @@ body {
 </div>
 
 <script>
-// 💡 보내주신 구글 웹 앱 주소를 정확하게 반영했습니다.
+// 💡 제공해주신 구글 주소를 정상적으로 연동 완료했습니다!
 const BASE_URL = "https://script.google.com/macros/s/AKfycbx8bfzKW1wPELHyYkmj048HqUmHV2JZ1ese1CwRMUdlYhkrptj4HAVMlrmyf7KFYyxvZA/exec";
 
 const sigList = [
@@ -240,7 +240,7 @@ async function loadLikesFromServer() {
         render(search.value);
     } catch (e) {
         console.error("데이터 로드 실패:", e);
-        list.innerHTML = `<div class="no-result">❌ 데이터를 불러오지 못했습니다. URL과 구글 권한을 확인하세요.</div>`;
+        list.innerHTML = `<div class="no-result">❌ 데이터를 불러오지 못했습니다. 구글 앱스 스크립트에서 배포 시 '액세스할 수 있는 사용자'를 '모든 사용자(Anyone)'로 하셨는지 확인하세요.</div>`;
     }
 }
 
